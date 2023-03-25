@@ -1,0 +1,8 @@
+model_weight/
+output/
+data/
+.DS_Store
+
+*.pth
+*.gz
+*ubyte
