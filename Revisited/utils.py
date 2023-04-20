@@ -114,11 +114,13 @@ def write_log(epoch, num_epochs, stats, log_dir="logs"):
         plt.savefig(os.path.join(log_dir, f"loss_curves_epoch_{epoch+1}.png"), dpi=300)
         plt.close(fig)
 
-def loss_info(step, total_length, epoch, unet_loss, fake_loss, real_loss, fake_img, real_img, target_img):
+def loss_info(step, total_length, epoch, unet_loss, fake_loss, real_loss, distance_metric, fake_img, real_img, target_img):
     print(f'Step [{step + 1}/{total_length}]', end = ', ')
     print('unet_loss:' , unet_loss.data.detach().cpu().numpy(),  
                       'fake_loss:', fake_loss.data.detach().cpu().numpy(), 
-                      'real_loss:', real_loss.detach().cpu().numpy())
+                      'real_loss:', real_loss.detach().cpu().numpy(),
+                        'distance_metric', distance_metric.detach().cpu().numpy()
+          )
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10, 10))
 
     # Display the real image
