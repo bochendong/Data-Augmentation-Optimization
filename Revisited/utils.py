@@ -5,7 +5,6 @@ import cv2
 import numpy as np
 import os
 
-
 def extract_features(images, pre_trian_vgg):
     with torch.no_grad():
         features = pre_trian_vgg(images)
@@ -27,7 +26,7 @@ def find_nearest_neighbor(images, target_label, features_dict, pre_trian_vgg):
     target_features_expanded = target_features.unsqueeze(0)
 
     # Compute distances between input images and target_images
-    distances = (input_features_expanded - target_features_expanded).view(images.size(0), -1, target_features.size(1)).norm(dim=2)
+    distances = (input_features_expanded - target_features_expanded).norm(dim=2)
 
     # Find the index of the input image with the smallest distance to the selected target_image
     min_distances, min_indices = distances.min(dim=1)
@@ -69,6 +68,7 @@ def erode_images(images):
     
     eroded_images_np = np.array(eroded_images)
     return torch.tensor(eroded_images_np).unsqueeze(1).cuda()
+
 def write_log(epoch, num_epochs, stats, log_dir="logs"):
     # Unpack the dictionary
     unet_loss = stats['unet_loss']
